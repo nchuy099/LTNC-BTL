@@ -1,0 +1,299 @@
+# depslib dependency file v1.0
+1682941043 source:d:\newproject\oda in sdland\ltexture.cpp
+	"LTexture.h"
+
+1682941043 d:\newproject\oda in sdland\ltexture.h
+	"Game_Base.h"
+
+1682939208 d:\newproject\oda in sdland\game_base.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<ctime>
+	<fstream>
+	<random>
+	<cstring>
+	<map>
+	<set>
+
+1682941275 source:d:\newproject\oda in sdland\main.cpp
+	"Game_Base.h"
+	"Game_Utils.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Ammo.h"
+	"Explosion.h"
+
+1682941043 d:\newproject\oda in sdland\game_utils.h
+	"Game_base.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Button.h"
+
+1682943401 source:d:\newproject\oda in sdland\game_utils.cpp
+	"Game_Utils.h"
+
+1682944073 source:d:\newproject\oda in sdland\character.cpp
+	"Character.h"
+
+1682941536 d:\newproject\oda in sdland\character.h
+	"Game_base.h"
+	"LTexture.h"
+	"Ammo.h"
+
+1682943401 d:\newproject\oda in sdland\enemy.h
+	"LTexture.h"
+	"Game_base.h"
+
+1682943401 source:d:\newproject\oda in sdland\enemy.cpp
+	"Enemy.h"
+
+1679329549 source:d:\newproject\oda in sdland\ltimer.cpp
+	"LTimer.h"
+
+1679330142 d:\newproject\oda in sdland\ltimer.h
+	"Game_Base.h"
+
+1682943828 d:\newproject\oda in sdland\ammo.h
+	"Game_base.h"
+
+1682943828 source:d:\newproject\oda in sdland\ammo.cpp
+	"Ammo.h"
+
+1680374811 source:d:\newproject\oda in sdland\button.cpp
+	"Button.h"
+
+1682944335 d:\newproject\oda in sdland\button.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682944335 d:\newproject\oda in sdland\explosion.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682335822 source:d:\newproject\oda in sdland\explosion.cpp
+	"Explosion.h"
+
+1682944335 source:d:\oda in sdland\ammo.cpp
+	"Ammo.h"
+
+1682943828 d:\oda in sdland\ammo.h
+	"Game_base.h"
+
+1682939208 d:\oda in sdland\game_base.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<ctime>
+	<fstream>
+	<random>
+	<cstring>
+	<map>
+	<set>
+
+1680374811 source:d:\oda in sdland\button.cpp
+	"Button.h"
+
+1682944335 d:\oda in sdland\button.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682941043 d:\oda in sdland\ltexture.h
+	"Game_Base.h"
+
+1682944073 source:d:\oda in sdland\character.cpp
+	"Character.h"
+
+1682941536 d:\oda in sdland\character.h
+	"Game_base.h"
+	"LTexture.h"
+	"Ammo.h"
+
+1682943401 source:d:\oda in sdland\enemy.cpp
+	"Enemy.h"
+
+1682943401 d:\oda in sdland\enemy.h
+	"LTexture.h"
+	"Game_base.h"
+
+1682944335 source:d:\oda in sdland\explosion.cpp
+	"Explosion.h"
+
+1682944335 d:\oda in sdland\explosion.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682943401 source:d:\oda in sdland\game_utils.cpp
+	"Game_Utils.h"
+
+1682941043 d:\oda in sdland\game_utils.h
+	"Game_base.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Button.h"
+
+1682941043 source:d:\oda in sdland\ltexture.cpp
+	"LTexture.h"
+
+1682941275 source:d:\oda in sdland\main.cpp
+	"Game_Base.h"
+	"Game_Utils.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Ammo.h"
+	"Explosion.h"
+
+1682944335 source:d:\oda run\ammo.cpp
+	"Ammo.h"
+
+1682943828 d:\oda run\ammo.h
+	"Game_base.h"
+
+1682939208 d:\oda run\game_base.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<ctime>
+	<fstream>
+	<random>
+	<cstring>
+	<map>
+	<set>
+
+1680374811 source:d:\oda run\button.cpp
+	"Button.h"
+
+1682944335 d:\oda run\button.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682941043 d:\oda run\ltexture.h
+	"Game_Base.h"
+
+1682944073 source:d:\oda run\character.cpp
+	"Character.h"
+
+1682941536 d:\oda run\character.h
+	"Game_base.h"
+	"LTexture.h"
+	"Ammo.h"
+
+1682943401 source:d:\oda run\enemy.cpp
+	"Enemy.h"
+
+1682943401 d:\oda run\enemy.h
+	"LTexture.h"
+	"Game_base.h"
+
+1682944335 source:d:\oda run\explosion.cpp
+	"Explosion.h"
+
+1682944335 d:\oda run\explosion.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682943401 source:d:\oda run\game_utils.cpp
+	"Game_Utils.h"
+
+1682941043 d:\oda run\game_utils.h
+	"Game_base.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Button.h"
+
+1682941043 source:d:\oda run\ltexture.cpp
+	"LTexture.h"
+
+1682941275 source:d:\oda run\main.cpp
+	"Game_Base.h"
+	"Game_Utils.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Ammo.h"
+	"Explosion.h"
+
+1682944335 source:d:\newproject\oda run\ammo.cpp
+	"Ammo.h"
+
+1682943828 d:\newproject\oda run\ammo.h
+	"Game_base.h"
+
+1682939208 d:\newproject\oda run\game_base.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<ctime>
+	<fstream>
+	<random>
+	<cstring>
+	<map>
+	<set>
+
+1680374811 source:d:\newproject\oda run\button.cpp
+	"Button.h"
+
+1682944335 d:\newproject\oda run\button.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682941043 d:\newproject\oda run\ltexture.h
+	"Game_Base.h"
+
+1682944073 source:d:\newproject\oda run\character.cpp
+	"Character.h"
+
+1682941536 d:\newproject\oda run\character.h
+	"Game_base.h"
+	"LTexture.h"
+	"Ammo.h"
+
+1682943401 source:d:\newproject\oda run\enemy.cpp
+	"Enemy.h"
+
+1682943401 d:\newproject\oda run\enemy.h
+	"LTexture.h"
+	"Game_base.h"
+
+1682944335 source:d:\newproject\oda run\explosion.cpp
+	"Explosion.h"
+
+1682944335 d:\newproject\oda run\explosion.h
+	"Game_base.h"
+	"LTexture.h"
+
+1682943401 source:d:\newproject\oda run\game_utils.cpp
+	"Game_Utils.h"
+
+1682941043 d:\newproject\oda run\game_utils.h
+	"Game_base.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Button.h"
+
+1682941043 source:d:\newproject\oda run\ltexture.cpp
+	"LTexture.h"
+
+1682950999 source:d:\newproject\oda run\main.cpp
+	"Game_Base.h"
+	"Game_Utils.h"
+	"LTexture.h"
+	"Character.h"
+	"Enemy.h"
+	"Ammo.h"
+	"Explosion.h"
+
