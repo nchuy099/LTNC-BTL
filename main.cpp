@@ -187,7 +187,9 @@ int main( int argc, char* argv[] )
                             HandlePauseButton(e, PauseButton, gPauseButton[0],
                                               ContinueButton, gContinueButton, gContinueButtonTexture,
                                               HomeButton, gHomeButton, gHomeButtonTexture, gPausedGameTexture,
-                                              GameState, gClick, gRenderer, quit, playAgain, quitGame);
+                                              GameState, gClick, gRenderer,
+                                              BackButton, gBackButton, gBackButtonTexture,
+                                              quit, playAgain, quitGame);
                             character.handleEvent(e, gJump, gShoot, gRenderer, char_mp);
                         }
                         if(!quit)
@@ -642,12 +644,12 @@ bool loadMedia()
     {
         gBackButton[0].x = 0;
         gBackButton[0].y = 0;
-        gBackButton[0].w = 71;
+        gBackButton[0].w = 72;
         gBackButton[0].h = 72;
 
-        gBackButton[1].x = 70;
+        gBackButton[1].x = 72;
         gBackButton[1].y = 0;
-        gBackButton[1].w = 72;
+        gBackButton[1].w = 71;
         gBackButton[1].h = 72;
     }
     if(!gPauseButtonTexture.loadFromFile("imgs/pause_button.png",gRenderer))

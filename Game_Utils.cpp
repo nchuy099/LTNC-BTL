@@ -205,7 +205,8 @@ void HandleExitButton(SDL_Event &e, Button &ExitButton, SDL_Rect gExitButton, bo
 
 void HandleContinueButton(SDL_Event &e, Button &ContinueButton, SDL_Rect gContinueButton[], LTexture &gContinueButtonTexture,
                           Button &HomeButton, SDL_Rect gHomeButton[], LTexture &gHomeButtonTexture,
-                        LTexture &gPausedGameTexture, bool &GameState, Mix_Chunk* gClick, SDL_Renderer* gRenderer, bool &quit, bool &playAgain, bool &quitGame)
+                        LTexture &gPausedGameTexture, bool &GameState, Mix_Chunk* gClick, SDL_Renderer* gRenderer,
+                        Button &BackButton, SDL_Rect gBackButton[], LTexture &gBackButtonTexture, bool &quit, bool &playAgain, bool &quitGame)
 {
 	while (!GameState && !quit && !quitGame)
 	{
@@ -234,6 +235,25 @@ void HandleContinueButton(SDL_Event &e, Button &ContinueButton, SDL_Rect gContin
             {
                 ContinueButton.mCurrentSprite = BUTTON_SPRITE_MOUSE_OUT;
             }
+
+            if(BackButton.inInside(e, gBackButton[0]))
+            {
+                if(e.type == SDL_MOUSEMOTION)
+                {
+                    BackButton.mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER;
+                }
+                else if(e.type == SDL_MOUSEBUTTONDOWN)
+                {
+                    Mix_PlayChannel(MIX_CHANNEL, gClick, NOT_REPEATITIVE);
+                    BackButton.mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER;
+                    GameState = true;
+                }
+            }
+            else
+            {
+                BackButton.mCurrentSprite = BUTTON_SPRITE_MOUSE_OUT;
+            }
+
             if(HomeButton.inInside(e, gHomeButton[0]))
             {
                 if(e.type == SDL_MOUSEMOTION)
@@ -258,14 +278,16 @@ void HandleContinueButton(SDL_Event &e, Button &ContinueButton, SDL_Rect gContin
         ContinueButton.render(CurrentClip_Continue, gRenderer, gContinueButtonTexture);
         SDL_Rect* CurrentClip_Home = &gHomeButton[HomeButton.mCurrentSprite];
         HomeButton.render(CurrentClip_Home, gRenderer, gHomeButtonTexture);
-
+        SDL_Rect* CurrentClip_Back = &gBackButton[BackButton.mCurrentSprite];
+        BackButton.render(CurrentClip_Back, gRenderer, gBackButtonTexture);
         SDL_RenderPresent(gRenderer);
 	}
 }
 
 void HandlePauseButton(SDL_Event &e, Button &PauseButton, SDL_Rect gPauseButton, Button &ContinueButton, SDL_Rect gContinueButton[], LTexture &gContinueButtonTexture,
                        Button &HomeButton, SDL_Rect gHomeButton[], LTexture &gHomeButtonTexture,
-                       LTexture &gPausedMenuTexture, bool &GameState, Mix_Chunk* gClick, SDL_Renderer* gRenderer, bool &quit, bool &playAgain, bool &quitGame)
+                       LTexture &gPausedMenuTexture, bool &GameState, Mix_Chunk* gClick, SDL_Renderer* gRenderer,
+                       Button &BackButton, SDL_Rect gBackButton[], LTexture &gBackButtonTexture, bool &quit, bool &playAgain, bool &quitGame)
 {
     if(PauseButton.inInside(e, gPauseButton))
     {
@@ -277,12 +299,10 @@ void HandlePauseButton(SDL_Event &e, Button &PauseButton, SDL_Rect gPauseButton,
         {
             Mix_PlayChannel(MIX_CHANNEL, gClick, NOT_REPEATITIVE);
             PauseButton.mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER;
-        }
-        else if(e.type == SDL_MOUSEBUTTONUP)
-        {
             GameState = false;
             HandleContinueButton(e, ContinueButton, gContinueButton, gContinueButtonTexture,
-                                 HomeButton, gHomeButton, gHomeButtonTexture, gPausedMenuTexture, GameState, gClick, gRenderer, quit, playAgain, quitGame);
+                                 HomeButton, gHomeButton, gHomeButtonTexture, gPausedMenuTexture, GameState, gClick, gRenderer,
+                                 BackButton, gBackButton, gBackButtonTexture, quit, playAgain, quitGame);
         }
     }
     else

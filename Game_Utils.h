@@ -38,12 +38,15 @@ void HandleExitButton(SDL_Event &e, Button &ExitButton, SDL_Rect gExitButton, bo
 
 void HandleContinueButton(SDL_Event &e, Button &ContinueButton, SDL_Rect gContinueButton[], LTexture &gContinueButtonTexture,
                           Button &HomeButton, SDL_Rect gHomeButton[], LTexture &gHomeButtonTexture, LTexture &gPausedMenuTexture,
-                          bool &GameState, Mix_Chunk* gClick, SDL_Renderer* gRenderer, bool &quit, bool &playAgain, bool &quitGame);
+                          bool &GameState, Mix_Chunk* gClick, SDL_Renderer* gRenderer,
+                          Button &BackButton, SDL_Rect gBackButton[], LTexture &gBackButtonTexture,
+                          bool &quit, bool &playAgain, bool &quitGame);
 
 void HandlePauseButton(SDL_Event &e, Button &PauseButton, SDL_Rect gPauseButton,
                        Button &ContinueButton, SDL_Rect gContinueButton[], LTexture &gContinueButtonTexture,
                        Button &HomeButton, SDL_Rect gHomeButton[], LTexture &gHomeButtonTexture,
                        LTexture &gPausedGameTexture, bool &GameState, Mix_Chunk* gClick, SDL_Renderer* gRenderer,
+                       Button &BackButton, SDL_Rect gBackButton[], LTexture &gBackButtonTexture,
                        bool &quit, bool &playAgain, bool &quitGame);
 
 void DrawEndGameSelection(SDL_Event &e, SDL_Renderer* gRenderer, LTexture &gGameOverTexture,
