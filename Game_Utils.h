@@ -28,11 +28,11 @@ void HandlePlayButton(SDL_Event &e, Button &PlayButton, SDL_Rect gPlayButton, bo
 void HandleHelpButton(SDL_Event &e, Button &HelpButton, SDL_Rect gHelpButton,
                       Button &BackButton, SDL_Rect gBackButton[], LTexture &gBackButtonTexture,
                       Mix_Chunk* gClick, SDL_Renderer* gRenderer, std::vector <double> &OffsetSpeed_BackgroundMenu,
-                      LTexture gBackgroundTexture[], bool &quitMenu, bool &quitGame);
+                      LTexture gBackgroundTexture[], LTexture &gInstructionTexture, bool &quitMenu, bool &quitGame);
 
 void HandleBackButton(SDL_Event &e, Button &BackButton, SDL_Rect gBackButton[], LTexture &gBackButtonTexture,
                       Mix_Chunk* gClick, SDL_Renderer* gRenderer, std::vector <double> &OffsetSpeed_BackgroundMenu,
-                      LTexture gBackgroundTexture[], bool &quitMenu, bool &quitGame);
+                      LTexture gBackgroundTexture[], LTexture &gInstructionTexture, bool &quitMenu, bool &quitGame);
 
 void HandleExitButton(SDL_Event &e, Button &ExitButton, SDL_Rect gExitButton, bool &quitMenu, bool &quitGame, Mix_Chunk* gClick);
 

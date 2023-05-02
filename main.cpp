@@ -19,6 +19,7 @@ LTexture gPauseButtonTexture;
 LTexture gContinueButtonTexture;
 LTexture gHomeButtonTexture;
 LTexture gPlayAgainButtonTexture;
+LTexture gInstructionTexture;
 LTexture gPausedGameTexture;
 LTexture gGameOverTexture;
 LTexture gScoreTexture;
@@ -112,7 +113,8 @@ int main( int argc, char* argv[] )
                     }
                     HandlePlayButton(e, PlayButton, gPlayButton[0], quitMenu, playAgain, gClick);
                     HandleHelpButton(e, HelpButton, gHelpButton[0], BackButton, gBackButton, gBackButtonTexture,
-                                     gClick, gRenderer, OffsetSpeed_BackgroundMenu, gBackgroundTexture, quitMenu, quitGame);
+                                     gClick, gRenderer, OffsetSpeed_BackgroundMenu, gBackgroundTexture,
+                                     gInstructionTexture, quitMenu, quitGame);
                     HandleExitButton(e, ExitButton, gExitButton[0], quitMenu, quitGame, gClick);
                 }
                 if(!quitMenu)
@@ -716,6 +718,11 @@ bool loadMedia()
         gPlayAgainButton[1].w = 107;
         gPlayAgainButton[1].h = 109;
     }
+    if(!gInstructionTexture.loadFromFile("imgs/instruction.png", gRenderer))
+    {
+        printf("Failed to render instruction texture!\n");
+        success = false;
+    }
     if(!gPausedGameTexture.loadFromFile("imgs/paused.png", gRenderer))
     {
         printf("Failed to render paused game texture!\n");
@@ -901,6 +908,7 @@ void close()
     gContinueButtonTexture.free();
     gHomeButtonTexture.free();
     gPlayAgainButtonTexture.free();
+    gInstructionTexture.free();
     gPausedGameTexture.free();
     gGameOverTexture.free();
     gScoreTexture.free();
