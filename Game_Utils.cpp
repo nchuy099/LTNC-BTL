@@ -177,7 +177,7 @@ void HandleBackButton(SDL_Event &e, Button &BackButton, SDL_Rect gBackButton[], 
         renderScrollingBackgroundMenu(OffsetSpeed_BackgroundMenu, gBackgroundTexture, gRenderer);
         SDL_Rect* CurrentClip_Back = &gBackButton[BackButton.mCurrentSprite];
         BackButton.render(CurrentClip_Back, gRenderer, gBackButtonTexture);
-        gInstructionTexture.render((SCREEN_WIDTH - gInstructionTexture.getWidth())/2, (SCREEN_HEIGHT - gInstructionTexture.getHeight())/2 -10, gRenderer);
+        gInstructionTexture.render((SCREEN_WIDTH - gInstructionTexture.getWidth())/2, (SCREEN_HEIGHT - gInstructionTexture.getHeight())/2 - 50, gRenderer);
         SDL_RenderPresent(gRenderer);
     }
 }
