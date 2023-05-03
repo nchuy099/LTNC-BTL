@@ -97,301 +97,300 @@ int main( int argc, char* argv[] )
 		    bool quitGame = false;
 		    while(!quitGame)
             {
-		    bool quitMenu = false;
-		    bool playAgain = false;
-		    Mix_PlayMusic(gMenuMusic, IS_REPEATITIVE);
-            std::vector <double> OffsetSpeed_BackgroundMenu(BACKGROUND_LAYER, BASE_SPEED);
-		    while(!quitMenu)
-            {
-                SDL_Event e;
-                while(SDL_PollEvent(&e) != 0)
+                bool quitMenu = false;
+                bool playAgain = false;
+                Mix_PlayMusic(gMenuMusic, IS_REPEATITIVE);
+                std::vector <double> OffsetSpeed_BackgroundMenu(BACKGROUND_LAYER, BASE_SPEED);
+                while(!quitMenu)
                 {
-                    if(e.type == SDL_QUIT)
+                    SDL_Event e;
+                    while(SDL_PollEvent(&e) != 0)
                     {
-                        quitMenu = true;
-                        quitGame = true;
-                    }
-                    HandlePlayButton(e, PlayButton, gPlayButton[0], quitMenu, playAgain, gClick);
-                    HandleHelpButton(e, HelpButton, gHelpButton[0], BackButton, gBackButton, gBackButtonTexture,
-                                     gClick, gRenderer, OffsetSpeed_BackgroundMenu, gBackgroundTexture,
-                                     gInstructionTexture, quitMenu, quitGame);
-                    HandleExitButton(e, ExitButton, gExitButton[0], quitMenu, quitGame, gClick);
-                }
-                if(!quitMenu)
-                {
-                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_RenderClear(gRenderer);
-                renderScrollingBackgroundMenu(OffsetSpeed_BackgroundMenu, gBackgroundTexture, gRenderer);
-                gGameTitleTexture.render((SCREEN_WIDTH - gGameTitleTexture.getWidth())/2, 200 - gGameTitleTexture.getHeight(), gRenderer);
-                SDL_Rect* CurrentClip_Play = &gPlayButton[PlayButton.mCurrentSprite];
-                PlayButton.render(CurrentClip_Play, gRenderer, gPlayButtonTexture);
-                SDL_Rect* CurrentClip_Help = &gHelpButton[HelpButton.mCurrentSprite];
-                HelpButton.render(CurrentClip_Help, gRenderer, gHelpButtonTexture);
-                SDL_Rect* CurrentClip_Exit = &gExitButton[ExitButton.mCurrentSprite];
-                ExitButton.render(CurrentClip_Exit, gRenderer, gExitButtonTexture);
-                SDL_RenderPresent(gRenderer);
-                }
-            }
-            while(playAgain)
-            {
-                Mix_PlayMusic(gInGameMusic, IS_REPEATITIVE);
-                srand(time(0));
-                bool quit = false;
-                bool GameState = true;
-                int time = 0;
-                int character_frame = 0;
-                int enemy1_frame = 0;
-                int enemy2_frame = 0;
-                int enemy3_frame = 0;
-                int enemy4_frame = 0;
-                int ammo_frame = 0;
-                int character_fire_frame = 0;
-                int score = 0;
-                int char_hp = 3;
-                int char_mp = 1;
-                int highScore = stoi(getHighScoreFromFile("high_score.txt"));
-                double BaseSpeed_Ground = BASE_SPEED;
-                std::vector <double> BaseSpeed_Background(BACKGROUND_LAYER, BASE_SPEED);
-                SDL_Event e;
-                Enemy enemy1(ENEMY_TYPE_1);
-                Enemy enemy2(ENEMY_TYPE_2);
-                Enemy enemy3(ENEMY_TYPE_3);
-                Enemy enemy4(ENEMY_TYPE_4);
-                GenerateEnemy(enemy1, enemy2, enemy3, enemy4, gRenderer);
-                int temp1 = 0;
-                int temp2 = 0;
-                Explosion Enemy1Explosion;
-                Explosion Enemy2Explosion;
-                Explosion Enemy3Explosion;
-                Explosion Enemy4Explosion;
-                Enemy1Explosion.loadFromFile("imgs/lon_rung.png", gRenderer);
-                Enemy2Explosion.loadFromFile("imgs/thich_khach.png", gRenderer);
-                Enemy3Explosion.loadFromFile("imgs/con_trung.png", gRenderer);
-                Enemy4Explosion.loadFromFile("imgs/dieu_hau.png", gRenderer);
-                int e1 = EXPLOSION_TIME;
-                int e2 = EXPLOSION_TIME;
-                int e3 = EXPLOSION_TIME;
-                int e4 = EXPLOSION_TIME;
-                while( !quit )
-                {
-                    if(GameState)
-                    {
-                        while( SDL_PollEvent( &e ) != 0 )
+                        if(e.type == SDL_QUIT)
                         {
-                            if( e.type == SDL_QUIT )
-                            {
-                                quit = true;
-                                playAgain = false;
-                                quitGame = true;
-                            }
-                            HandlePauseButton(e, PauseButton, gPauseButton[0],
-                                              ContinueButton, gContinueButton, gContinueButtonTexture,
-                                              HomeButton, gHomeButton, gHomeButtonTexture, gPausedGameTexture,
-                                              GameState, gClick, gRenderer,
-                                              BackButton, gBackButton, gBackButtonTexture,
-                                              quit, playAgain, quitGame);
-                            character.handleEvent(e, gJump, gShoot, gRenderer, char_mp);
+                            quitMenu = true;
+                            quitGame = true;
                         }
-                        if(!quit)
-                        {
-                        updateGameAndScore(time, score, highScore, enemy1, enemy2, enemy3, enemy4, gRenderer);
+                        HandlePlayButton(e, PlayButton, gPlayButton[0], quitMenu, playAgain, gClick);
+                        HandleHelpButton(e, HelpButton, gHelpButton[0], BackButton, gBackButton, gBackButtonTexture,
+                                        gClick, gRenderer, OffsetSpeed_BackgroundMenu, gBackgroundTexture,
+                                        gInstructionTexture, quitMenu, quitGame);
+                        HandleExitButton(e, ExitButton, gExitButton[0], quitMenu, quitGame, gClick);
+                    }
+                    if(!quitMenu)
+                    {
                         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                         SDL_RenderClear(gRenderer);
-                        renderScrollingBackground(BaseSpeed_Background, gBackgroundTexture, gRenderer);
-                        SDL_Rect* currentClip_Dart = NULL;
-                        character.handleAmmo(gRenderer, ammo_frame, currentClip_Dart);
-                        character.move();
-                        SDL_Rect* currentClip_Enemy1 = NULL;
-                        SDL_Rect* currentClip_Enemy2 = NULL;
-                        SDL_Rect* currentClip_Enemy3 = NULL;
-                        SDL_Rect* currentClip_Enemy4 = NULL;
-                        std::set<Ammo*>  Darts = character.getAmmoList();
-                        for(std::set<Ammo*>::iterator it = Darts.begin(); it!=Darts.end(); it++)
-                        {
-                            Ammo* shot = *it;
-                            if(shot != NULL)
-                            {
-                                SDL_Rect shotRect;
-                                shotRect.x = shot->getPosX();
-                                shotRect.y = shot->getPosY();
-                                shotRect.w = 32;
-                                shotRect.h = 32;
-                                if (checkCollision2(*shot, shotRect, enemy1, gEnemy1Clips[0]) )
-                                {
-                                    Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
-                                    Enemy1Explosion.setPos(enemy1.getPosX(), enemy1.getPosY());
-                                    Enemy1Explosion.set_clip(gEnemy1Clips[3]);
-                                    e1--;
-                                    score += SCORE_INCREASEMENT_ENEMY1;
-                                    character.removeAmmo(shot);
-                                    if(char_mp < 3) char_mp++;
-                                    enemy1.~Enemy();
-                                }
-                                else if (checkCollision2(*shot, shotRect, enemy2, gEnemy2Clips[0]) )
-                                {
-                                    Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
-                                    Enemy2Explosion.setPos(enemy2.getPosX(), enemy2.getPosY());
-                                    Enemy2Explosion.set_clip(gEnemy2Clips[3]);
-                                    e2--;
-                                    score += SCORE_INCREASEMENT_ENEMY2;
-                                    character.removeAmmo(shot);
-                                    if(char_mp < 3) char_mp++;
-                                    enemy2.~Enemy();
-                                }
-                                else if (checkCollision2(*shot, shotRect, enemy3, gEnemy3Clips[0]) )
-                                {
-                                    Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
-                                    Enemy3Explosion.setPos(enemy3.getPosX(), enemy3.getPosY());
-                                    Enemy3Explosion.set_clip(gEnemy3Clips[3]);
-                                    e3--;
-                                    score += SCORE_INCREASEMENT_ENEMY3;
-                                    character.removeAmmo(shot);
-                                    if(char_mp < 3) char_mp++;
-                                    enemy3.~Enemy();
-                                }
-                                else if (checkCollision2(*shot, shotRect, enemy4, gEnemy4Clips[0]) )
-                                {
-                                    Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
-                                    Enemy4Explosion.setPos(enemy4.getPosX(), enemy4.getPosY());
-                                    Enemy4Explosion.set_clip(gEnemy4Clips[3]);
-                                    e4--;
-                                    score += SCORE_INCREASEMENT_ENEMY4;
-                                    character.removeAmmo(shot);
-                                    if(char_mp < 3) char_mp++;
-                                    enemy4.~Enemy();
-                                }
-
-                            }
-                        }
-                        if(e1<EXPLOSION_TIME)
-                        {
-                            Enemy1Explosion.render(gRenderer);
-                            e1--;
-                            if(e1==0)   e1 = EXPLOSION_TIME;
-                        }
-                        if(e2<EXPLOSION_TIME)
-                        {
-                            Enemy2Explosion.render(gRenderer);
-                            e2--;
-                            if(e2==0)   e2 = EXPLOSION_TIME;
-                        }
-                        if(e3<EXPLOSION_TIME)
-                        {
-                            Enemy3Explosion.render(gRenderer);
-                            e3--;
-                            if(e3==0)   e3 = EXPLOSION_TIME;
-                        }
-                        if(e4<EXPLOSION_TIME)
-                        {
-                            Enemy4Explosion.render(gRenderer);
-                            e4--;
-                            if(e4==0)   e4 = EXPLOSION_TIME;
-                        }
-                        if(currentClip_Enemy1 == NULL)
-                        {
-                            currentClip_Enemy1 = &gEnemy1Clips[enemy1_frame / SLOW_FRAME_ENEMY1];
-                            enemy1.move();
-                            enemy1.render(gRenderer, currentClip_Enemy1);
-                        }
-                        if(currentClip_Enemy2 == NULL)
-                        {
-                            currentClip_Enemy2 = &gEnemy2Clips[enemy2_frame / SLOW_FRAME_ENEMY2];
-                            enemy2.move();
-                            enemy2.render(gRenderer, currentClip_Enemy2);
-                        }
-                        if(currentClip_Enemy3 == NULL)
-                        {
-                            currentClip_Enemy3 = &gEnemy3Clips[enemy3_frame / SLOW_FRAME_ENEMY3];
-                            enemy3.move();
-                            enemy3.render(gRenderer, currentClip_Enemy3);
-                        }
-                        if(currentClip_Enemy4 == NULL)
-                        {
-                            currentClip_Enemy4 = &gEnemy4Clips[enemy4_frame / SLOW_FRAME_ENEMY4];
-                            enemy4.move();
-                            enemy4.render(gRenderer, currentClip_Enemy4);
-                        }
-                        SDL_Rect* currentClip_Character = NULL;
-                        temp2 = temp1;
-                        if(checkCollision1(character, gCharacterClips, enemy2, gEnemy2Clips) || checkCollision1(character, gCharacterClips, enemy1, gEnemy1Clips)
-                            || checkCollision1(character, gCharacterClips, enemy3, gEnemy3Clips) || checkCollision1(character, gCharacterClips, enemy4, gEnemy4Clips))
-                        {
-                            if(temp1 == 0)  Mix_PlayChannel(MIX_CHANNEL, gHurt, NOT_REPEATITIVE);
-                            temp1++;
-                            currentClip_Character = &gCharacterClips[8];
-                            character.render(currentClip_Character, gRenderer, gCharacterTexture);
-                            updateHighScore("high_score.txt", highScore);
-                            SDL_Delay(40);
-                        }
-                        else if(temp1 == temp2 && temp1>0)
-                            {
-                                if(char_hp > 0) char_hp--;
-                                temp1 = temp2 =0;
-                                currentClip_Character = &gCharacterClips[8];
-                                character.render(currentClip_Character, gRenderer, gCharacterTexture);
-                            }
-                        else if(character.isShooting())
-                        {
-                            if(character.onGround())
-                            {
-                                currentClip_Character = &gCharacterFireClips[character_fire_frame / SLOW_FRAME_CHAR_FIRE];
-                                character.render(currentClip_Character, gRenderer, gCharacterFireTexture);
-                            }
-                            else if(character.isJumpingUp())
-                            {
-                                currentClip_Character = &gCharacterFireClips[4];
-                                character.render(currentClip_Character, gRenderer, gCharacterFireTexture);
-                            }
-                            else
-                            {
-                                currentClip_Character = &gCharacterFireClips[5];
-                                character.render(currentClip_Character, gRenderer, gCharacterFireTexture);
-                            }
-                        }
-                        else
-                        {
-                            if (character.onGround())
-                            {
-                                currentClip_Character = &gCharacterClips[character_frame / SLOW_FRAME_CHAR];
-                                character.render(currentClip_Character, gRenderer, gCharacterTexture);
-                            }
-                            else if(character.isJumpingUp())
-                            {
-                                currentClip_Character = &gCharacterClips[6];
-                            }
-                            else
-                            {
-                                currentClip_Character = &gCharacterClips[7];
-                            }
-                            character.render(currentClip_Character, gRenderer, gCharacterTexture);
-                        }
-                        if(char_hp == 1 && temp1==1)    Mix_PlayChannel(MIX_CHANNEL, gDie, NOT_REPEATITIVE);
-                        renderCharacterPower(gHP_img, gMP_img, gHP_num, gMP_num, char_hp, char_mp, gRenderer, gFont);
-                        SDL_Rect* CurrentClip_Pause = &gPauseButton[PauseButton.mCurrentSprite];
-						PauseButton.render(CurrentClip_Pause, gRenderer, gPauseButtonTexture);
-                        renderScrollingGround(gGround, BaseSpeed_Ground, gRenderer);
-                        DrawPlayerScore(gScoreTexture, score, gFont, gRenderer);
-						DrawPlayerHighScore(gHighScoreTexture, highScore, gFont, gRenderer);
+                        renderScrollingBackgroundMenu(OffsetSpeed_BackgroundMenu, gBackgroundTexture, gRenderer);
+                        gGameTitleTexture.render((SCREEN_WIDTH - gGameTitleTexture.getWidth())/2, 200 - gGameTitleTexture.getHeight(), gRenderer);
+                        SDL_Rect* CurrentClip_Play = &gPlayButton[PlayButton.mCurrentSprite];
+                        PlayButton.render(CurrentClip_Play, gRenderer, gPlayButtonTexture);
+                        SDL_Rect* CurrentClip_Help = &gHelpButton[HelpButton.mCurrentSprite];
+                        HelpButton.render(CurrentClip_Help, gRenderer, gHelpButtonTexture);
+                        SDL_Rect* CurrentClip_Exit = &gExitButton[ExitButton.mCurrentSprite];
+                        ExitButton.render(CurrentClip_Exit, gRenderer, gExitButtonTexture);
                         SDL_RenderPresent(gRenderer);
-
-                        ControlCharFrame(character_frame);
-                        ControlEnemy1Frame(enemy1_frame);
-                        ControlEnemy2Frame(enemy2_frame);
-                        ControlEnemy3Frame(enemy3_frame);
-                        ControlEnemy4Frame(enemy4_frame);
-                        ControlAmmoFrame(ammo_frame);
-                        ControlCharacterFireFrame(character_fire_frame, character);
-
-                        if(char_hp == 0)
-                        {
-                            Mix_PauseMusic();
-                            Mix_PlayMusic(gGameOverMusic, IS_REPEATITIVE);
-                           quit = true;
-                        }
-
-                    }
                     }
                 }
+                while(playAgain)
+                {
+                    Mix_PlayMusic(gInGameMusic, IS_REPEATITIVE);
+                    srand(time(0));
+                    bool quit = false;
+                    bool GameState = true;
+                    int time = 0;
+                    int character_frame = 0;
+                    int enemy1_frame = 0;
+                    int enemy2_frame = 0;
+                    int enemy3_frame = 0;
+                    int enemy4_frame = 0;
+                    int ammo_frame = 0;
+                    int character_fire_frame = 0;
+                    int score = 0;
+                    int char_hp = 3;
+                    int char_mp = 1;
+                    int highScore = stoi(getHighScoreFromFile("high_score.txt"));
+                    double BaseSpeed_Ground = BASE_SPEED;
+                    std::vector <double> BaseSpeed_Background(BACKGROUND_LAYER, BASE_SPEED);
+                    SDL_Event e;
+                    Enemy enemy1(ENEMY_TYPE_1);
+                    Enemy enemy2(ENEMY_TYPE_2);
+                    Enemy enemy3(ENEMY_TYPE_3);
+                    Enemy enemy4(ENEMY_TYPE_4);
+                    GenerateEnemy(enemy1, enemy2, enemy3, enemy4, gRenderer);
+                    int temp1 = 0;
+                    int temp2 = 0;
+                    Explosion Enemy1Explosion;
+                    Explosion Enemy2Explosion;
+                    Explosion Enemy3Explosion;
+                    Explosion Enemy4Explosion;
+                    Enemy1Explosion.loadFromFile("imgs/lon_rung.png", gRenderer);
+                    Enemy2Explosion.loadFromFile("imgs/thich_khach.png", gRenderer);
+                    Enemy3Explosion.loadFromFile("imgs/con_trung.png", gRenderer);
+                    Enemy4Explosion.loadFromFile("imgs/dieu_hau.png", gRenderer);
+                    int e1 = EXPLOSION_TIME;
+                    int e2 = EXPLOSION_TIME;
+                    int e3 = EXPLOSION_TIME;
+                    int e4 = EXPLOSION_TIME;
+                    while( !quit )
+                    {
+                        if(GameState)
+                        {
+                            while( SDL_PollEvent( &e ) != 0 )
+                            {
+                                if( e.type == SDL_QUIT )
+                                {
+                                    quit = true;
+                                    playAgain = false;
+                                    quitGame = true;
+                                }
+                                HandlePauseButton(e, PauseButton, gPauseButton[0],
+                                                    ContinueButton, gContinueButton, gContinueButtonTexture,
+                                                    HomeButton, gHomeButton, gHomeButtonTexture, gPausedGameTexture,
+                                                    GameState, gClick, gRenderer,
+                                                    BackButton, gBackButton, gBackButtonTexture,
+                                                    quit, playAgain, quitGame);
+                                character.handleEvent(e, gJump, gShoot, gRenderer, char_mp);
+                            }
+                            if(!quit)
+                            {
+                                updateGameAndScore(time, score, highScore, enemy1, enemy2, enemy3, enemy4, gRenderer);
+                                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                                SDL_RenderClear(gRenderer);
+                                renderScrollingBackground(BaseSpeed_Background, gBackgroundTexture, gRenderer);
+                                SDL_Rect* currentClip_Dart = NULL;
+                                character.handleAmmo(gRenderer, ammo_frame, currentClip_Dart);
+                                character.move();
+                                SDL_Rect* currentClip_Enemy1 = NULL;
+                                SDL_Rect* currentClip_Enemy2 = NULL;
+                                SDL_Rect* currentClip_Enemy3 = NULL;
+                                SDL_Rect* currentClip_Enemy4 = NULL;
+                                std::set<Ammo*>  Darts = character.getAmmoList();
+                                for(std::set<Ammo*>::iterator it = Darts.begin(); it!=Darts.end(); it++)
+                                {
+                                    Ammo* shot = *it;
+                                    if(shot != NULL)
+                                    {
+                                        SDL_Rect shotRect;
+                                        shotRect.x = shot->getPosX();
+                                        shotRect.y = shot->getPosY();
+                                        shotRect.w = 32;
+                                        shotRect.h = 32;
+                                        if (checkCollision2(*shot, shotRect, enemy1, gEnemy1Clips[0]) )
+                                        {
+                                            Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
+                                            Enemy1Explosion.setPos(enemy1.getPosX(), enemy1.getPosY());
+                                            Enemy1Explosion.set_clip(gEnemy1Clips[3]);
+                                            e1--;
+                                            score += SCORE_INCREASEMENT_ENEMY1;
+                                            character.removeAmmo(shot);
+                                            if(char_mp < 3) char_mp++;
+                                            enemy1.~Enemy();
+                                        }
+                                        else if (checkCollision2(*shot, shotRect, enemy2, gEnemy2Clips[0]) )
+                                        {
+                                            Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
+                                            Enemy2Explosion.setPos(enemy2.getPosX(), enemy2.getPosY());
+                                            Enemy2Explosion.set_clip(gEnemy2Clips[3]);
+                                            e2--;
+                                            score += SCORE_INCREASEMENT_ENEMY2;
+                                            character.removeAmmo(shot);
+                                            if(char_mp < 3) char_mp++;
+                                            enemy2.~Enemy();
+                                        }
+                                        else if (checkCollision2(*shot, shotRect, enemy3, gEnemy3Clips[0]) )
+                                        {
+                                            Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
+                                            Enemy3Explosion.setPos(enemy3.getPosX(), enemy3.getPosY());
+                                            Enemy3Explosion.set_clip(gEnemy3Clips[3]);
+                                            e3--;
+                                            score += SCORE_INCREASEMENT_ENEMY3;
+                                            character.removeAmmo(shot);
+                                            if(char_mp < 3) char_mp++;
+                                            enemy3.~Enemy();
+                                        }
+                                        else if (checkCollision2(*shot, shotRect, enemy4, gEnemy4Clips[0]) )
+                                        {
+                                            Mix_PlayChannel(MIX_CHANNEL, gHit, NOT_REPEATITIVE);
+                                            Enemy4Explosion.setPos(enemy4.getPosX(), enemy4.getPosY());
+                                            Enemy4Explosion.set_clip(gEnemy4Clips[3]);
+                                            e4--;
+                                            score += SCORE_INCREASEMENT_ENEMY4;
+                                            character.removeAmmo(shot);
+                                            if(char_mp < 3) char_mp++;
+                                            enemy4.~Enemy();
+                                        }
+                                    }
+                                }
+                                if(e1<EXPLOSION_TIME)
+                                {
+                                    Enemy1Explosion.render(gRenderer);
+                                    e1--;
+                                    if(e1==0)   e1 = EXPLOSION_TIME;
+                                }
+                                if(e2<EXPLOSION_TIME)
+                                {
+                                    Enemy2Explosion.render(gRenderer);
+                                    e2--;
+                                    if(e2==0)   e2 = EXPLOSION_TIME;
+                                }
+                                if(e3<EXPLOSION_TIME)
+                                {
+                                    Enemy3Explosion.render(gRenderer);
+                                    e3--;
+                                    if(e3==0)   e3 = EXPLOSION_TIME;
+                                }
+                                if(e4<EXPLOSION_TIME)
+                                {
+                                    Enemy4Explosion.render(gRenderer);
+                                    e4--;
+                                    if(e4==0)   e4 = EXPLOSION_TIME;
+                                }
+                                if(currentClip_Enemy1 == NULL)
+                                {
+                                    currentClip_Enemy1 = &gEnemy1Clips[enemy1_frame / SLOW_FRAME_ENEMY1];
+                                    enemy1.move();
+                                    enemy1.render(gRenderer, currentClip_Enemy1);
+                                }
+                                if(currentClip_Enemy2 == NULL)
+                                {
+                                    currentClip_Enemy2 = &gEnemy2Clips[enemy2_frame / SLOW_FRAME_ENEMY2];
+                                    enemy2.move();
+                                    enemy2.render(gRenderer, currentClip_Enemy2);
+                                }
+                                if(currentClip_Enemy3 == NULL)
+                                {
+                                    currentClip_Enemy3 = &gEnemy3Clips[enemy3_frame / SLOW_FRAME_ENEMY3];
+                                    enemy3.move();
+                                    enemy3.render(gRenderer, currentClip_Enemy3);
+                                }
+                                if(currentClip_Enemy4 == NULL)
+                                {
+                                    currentClip_Enemy4 = &gEnemy4Clips[enemy4_frame / SLOW_FRAME_ENEMY4];
+                                    enemy4.move();
+                                    enemy4.render(gRenderer, currentClip_Enemy4);
+                                }
+                                SDL_Rect* currentClip_Character = NULL;
+                                temp2 = temp1;
+                                if(checkCollision1(character, gCharacterClips, enemy2, gEnemy2Clips) || checkCollision1(character, gCharacterClips, enemy1, gEnemy1Clips)
+                                    || checkCollision1(character, gCharacterClips, enemy3, gEnemy3Clips) || checkCollision1(character, gCharacterClips, enemy4, gEnemy4Clips))
+                                {
+                                    if(temp1 == 0)  Mix_PlayChannel(MIX_CHANNEL, gHurt, NOT_REPEATITIVE);
+                                    temp1++;
+                                    currentClip_Character = &gCharacterClips[8];
+                                    character.render(currentClip_Character, gRenderer, gCharacterTexture);
+                                    updateHighScore("high_score.txt", highScore);
+                                    SDL_Delay(40);
+                                }
+                                else if(temp1 == temp2 && temp1>0)
+                                {
+                                    if(char_hp > 0) char_hp--;
+                                    temp1 = temp2 =0;
+                                    currentClip_Character = &gCharacterClips[8];
+                                    character.render(currentClip_Character, gRenderer, gCharacterTexture);
+                                }
+                                else if(character.isShooting())
+                                {
+                                    if(character.onGround())
+                                    {
+                                        currentClip_Character = &gCharacterFireClips[character_fire_frame / SLOW_FRAME_CHAR_FIRE];
+                                        character.render(currentClip_Character, gRenderer, gCharacterFireTexture);
+                                    }
+                                    else if(character.isJumpingUp())
+                                    {
+                                        currentClip_Character = &gCharacterFireClips[4];
+                                        character.render(currentClip_Character, gRenderer, gCharacterFireTexture);
+                                    }
+                                    else
+                                    {
+                                        currentClip_Character = &gCharacterFireClips[5];
+                                        character.render(currentClip_Character, gRenderer, gCharacterFireTexture);
+                                    }
+                                }
+                                else
+                                {
+                                    if (character.onGround())
+                                    {
+                                        currentClip_Character = &gCharacterClips[character_frame / SLOW_FRAME_CHAR];
+                                        character.render(currentClip_Character, gRenderer, gCharacterTexture);
+                                    }
+                                    else if(character.isJumpingUp())
+                                    {
+                                        currentClip_Character = &gCharacterClips[6];
+                                    }
+                                    else
+                                    {
+                                        currentClip_Character = &gCharacterClips[7];
+                                    }
+                                    character.render(currentClip_Character, gRenderer, gCharacterTexture);
+                                }
+                                if(char_hp == 1 && temp1==1)    Mix_PlayChannel(MIX_CHANNEL, gDie, NOT_REPEATITIVE);
+                                renderCharacterPower(gHP_img, gMP_img, gHP_num, gMP_num, char_hp, char_mp, gRenderer, gFont);
+                                SDL_Rect* CurrentClip_Pause = &gPauseButton[PauseButton.mCurrentSprite];
+                                PauseButton.render(CurrentClip_Pause, gRenderer, gPauseButtonTexture);
+                                renderScrollingGround(gGround, BaseSpeed_Ground, gRenderer);
+                                DrawPlayerScore(gScoreTexture, score, gFont, gRenderer);
+                                DrawPlayerHighScore(gHighScoreTexture, highScore, gFont, gRenderer);
+                                SDL_RenderPresent(gRenderer);
+
+                                ControlCharFrame(character_frame);
+                                ControlEnemy1Frame(enemy1_frame);
+                                ControlEnemy2Frame(enemy2_frame);
+                                ControlEnemy3Frame(enemy3_frame);
+                                ControlEnemy4Frame(enemy4_frame);
+                                ControlAmmoFrame(ammo_frame);
+                                ControlCharacterFireFrame(character_fire_frame, character);
+
+                                if(char_hp == 0)
+                                {
+                                    Mix_PauseMusic();
+                                    Mix_PlayMusic(gGameOverMusic, IS_REPEATITIVE);
+                                   quit = true;
+                                }
+
+                            }
+                        }
+                    }
                     DrawEndGameSelection(e, gRenderer, gGameOverTexture, PlayAgainButton, gPlayAgainButton, gPlayAgainButtonTexture
                                          , HomeButton, gHomeButton, gHomeButtonTexture, gClick, playAgain, quitGame);
                     character.resetCharacter();
@@ -404,8 +403,8 @@ int main( int argc, char* argv[] )
                     Enemy2Explosion.~Explosion();
                     Enemy3Explosion.~Explosion();
                     Enemy4Explosion.~Explosion();
+                }
             }
-        }
 		}
     }
 	close();

@@ -4,7 +4,7 @@ Character::Character()
 {
 	posX = SCREEN_WIDTH - 700;
 	posY = GROUND - CHARACTER_HEIGHT + 3 ;
-	status = 0;
+	status = RUN;
 	jumpStatus = false;
 	shootStatus = false;
 }
@@ -13,13 +13,13 @@ void Character::resetCharacter()
 {
 	posX = SCREEN_WIDTH - 700;
 	posY = GROUND - CHARACTER_HEIGHT + 3 ;
-	status = 0;
+	status = RUN;
 	jumpStatus = false;
 }
 
 bool Character::onGround()
 {
-	return posY == GROUND - CHARACTER_HEIGHT + 3 ;
+	return posY >= GROUND - CHARACTER_HEIGHT + 3 ;
 }
 
 bool Character::isJumpingUp()
@@ -153,20 +153,21 @@ void Character::removeAmmo(Ammo* shot)
 }
 void Character::move()
 {
-	if (status == JUMP && posY >= MAX_HEIGHT)
+	if (status == JUMP && posY > MAX_HEIGHT)
 	{
-		posY += -JUMP_SPEED ;
+	    posY += -JUMP_SPEED ;
         jumpStatus = true;
 	}
-	if (posY <= MAX_HEIGHT )
+    if (posY <= MAX_HEIGHT )
 	{
 		status = FALL;
 	}
 	if (status == FALL && posY <  GROUND - CHARACTER_HEIGHT + 3 )
 	{
-		posY += FALL_SPEED ;
+        posY += FALL_SPEED ;
 		jumpStatus = false;
 	}
+    if  (posY >= GROUND - CHARACTER_HEIGHT + 3) status = RUN;
 }
 
 void Character::render(SDL_Rect* currentClip, SDL_Renderer *gRenderer, LTexture &gCharacterTexture)
