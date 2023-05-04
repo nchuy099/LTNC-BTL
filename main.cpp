@@ -100,7 +100,7 @@ int main( int argc, char* argv[] )
                 bool quitMenu = false;
                 bool playAgain = false;
                 Mix_PlayMusic(gMenuMusic, IS_REPEATITIVE);
-                std::vector <double> OffsetSpeed_BackgroundMenu(BACKGROUND_LAYER, BASE_SPEED);
+                std::vector <double> BaseSpeed_BackgroundMenu(BACKGROUND_LAYER, BASE_SPEED);
                 while(!quitMenu)
                 {
                     SDL_Event e;
@@ -113,7 +113,7 @@ int main( int argc, char* argv[] )
                         }
                         HandlePlayButton(e, PlayButton, gPlayButton[0], quitMenu, playAgain, gClick);
                         HandleHelpButton(e, HelpButton, gHelpButton[0], BackButton, gBackButton, gBackButtonTexture,
-                                        gClick, gRenderer, OffsetSpeed_BackgroundMenu, gBackgroundTexture,
+                                        gClick, gRenderer, BaseSpeed_BackgroundMenu, gBackgroundTexture,
                                         gInstructionTexture, quitMenu, quitGame);
                         HandleExitButton(e, ExitButton, gExitButton[0], quitMenu, quitGame, gClick);
                     }
@@ -121,7 +121,7 @@ int main( int argc, char* argv[] )
                     {
                         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                         SDL_RenderClear(gRenderer);
-                        renderScrollingBackgroundMenu(OffsetSpeed_BackgroundMenu, gBackgroundTexture, gRenderer);
+                        renderScrollingBackgroundMenu(BaseSpeed_BackgroundMenu, gBackgroundTexture, gRenderer);
                         gGameTitleTexture.render((SCREEN_WIDTH - gGameTitleTexture.getWidth())/2, 200 - gGameTitleTexture.getHeight(), gRenderer);
                         SDL_Rect* CurrentClip_Play = &gPlayButton[PlayButton.mCurrentSprite];
                         PlayButton.render(CurrentClip_Play, gRenderer, gPlayButtonTexture);
@@ -158,8 +158,8 @@ int main( int argc, char* argv[] )
                     Enemy enemy3(ENEMY_TYPE_3);
                     Enemy enemy4(ENEMY_TYPE_4);
                     GenerateEnemy(enemy1, enemy2, enemy3, enemy4, gRenderer);
-                    int temp1 = 0;
-                    int temp2 = 0;
+                    int HP_temp1 = 0;
+                    int HP_temp2 = 0;
                     Explosion Enemy1Explosion;
                     Explosion Enemy2Explosion;
                     Explosion Enemy3Explosion;
@@ -174,7 +174,7 @@ int main( int argc, char* argv[] )
                     int e4 = EXPLOSION_TIME;
                     while( !quit )
                     {
-                        if(GameState)
+                        if(GameState)//for pause game
                         {
                             while( SDL_PollEvent( &e ) != 0 )
                             {
@@ -311,21 +311,21 @@ int main( int argc, char* argv[] )
                                     enemy4.render(gRenderer, currentClip_Enemy4);
                                 }
                                 SDL_Rect* currentClip_Character = NULL;
-                                temp2 = temp1;
+                                HP_temp2 = HP_temp1;
                                 if(checkCollision1(character, gCharacterClips, enemy2, gEnemy2Clips) || checkCollision1(character, gCharacterClips, enemy1, gEnemy1Clips)
                                     || checkCollision1(character, gCharacterClips, enemy3, gEnemy3Clips) || checkCollision1(character, gCharacterClips, enemy4, gEnemy4Clips))
                                 {
-                                    if(temp1 == 0)  Mix_PlayChannel(MIX_CHANNEL, gHurt, NOT_REPEATITIVE);
-                                    temp1++;
+                                    if(HP_temp1 == 0)  Mix_PlayChannel(MIX_CHANNEL, gHurt, NOT_REPEATITIVE);
+                                    HP_temp1++;
                                     currentClip_Character = &gCharacterClips[8];
                                     character.render(currentClip_Character, gRenderer, gCharacterTexture);
                                     updateHighScore("high_score.txt", highScore);
                                     SDL_Delay(40);
                                 }
-                                else if(temp1 == temp2 && temp1>0)
+                                else if(HP_temp1 == HP_temp2 && HP_temp1>0)
                                 {
                                     if(char_hp > 0) char_hp--;
-                                    temp1 = temp2 =0;
+                                    HP_temp1 = HP_temp2 =0;
                                     currentClip_Character = &gCharacterClips[8];
                                     character.render(currentClip_Character, gRenderer, gCharacterTexture);
                                 }
@@ -364,7 +364,7 @@ int main( int argc, char* argv[] )
                                     }
                                     character.render(currentClip_Character, gRenderer, gCharacterTexture);
                                 }
-                                if(char_hp == 1 && temp1==1)    Mix_PlayChannel(MIX_CHANNEL, gDie, NOT_REPEATITIVE);
+                                if(char_hp == 1 && HP_temp1==1)    Mix_PlayChannel(MIX_CHANNEL, gDie, NOT_REPEATITIVE);
                                 renderCharacterPower(gHP_img, gMP_img, gHP_num, gMP_num, char_hp, char_mp, gRenderer, gFont);
                                 SDL_Rect* CurrentClip_Pause = &gPauseButton[PauseButton.mCurrentSprite];
                                 PauseButton.render(CurrentClip_Pause, gRenderer, gPauseButtonTexture);

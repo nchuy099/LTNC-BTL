@@ -316,8 +316,8 @@ void DrawEndGameSelection(SDL_Event &e, SDL_Renderer* gRenderer, LTexture &gGame
 {
     if (playAgain)
 	{
-		bool End_Game = true;
-		while (End_Game)
+		bool quit_End_Game_Menu = false;
+		while (!quit_End_Game_Menu)
 		{
 			while (SDL_PollEvent(&e) != 0)
 			{
@@ -325,7 +325,7 @@ void DrawEndGameSelection(SDL_Event &e, SDL_Renderer* gRenderer, LTexture &gGame
 				{
 					playAgain = false;
                     quitGame = true;
-                    End_Game = false;
+                    quit_End_Game_Menu = true;
 				}
                 if(PlayAgainButton.inInside(e, gPlayAgainButton[0]))
                 {
@@ -337,7 +337,7 @@ void DrawEndGameSelection(SDL_Event &e, SDL_Renderer* gRenderer, LTexture &gGame
                     {
                         Mix_PlayChannel(MIX_CHANNEL, gClick, NOT_REPEATITIVE);
                         PlayAgainButton.mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER;
-                        End_Game = false;
+                        quit_End_Game_Menu = true;
                     }
                 }
                 else
@@ -355,7 +355,7 @@ void DrawEndGameSelection(SDL_Event &e, SDL_Renderer* gRenderer, LTexture &gGame
                         Mix_PlayChannel(MIX_CHANNEL, gClick, NOT_REPEATITIVE);
                         HomeButton.mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER;
                         playAgain = false;
-                        End_Game = false;
+                        quit_End_Game_Menu = true;
                     }
                 }
                 else
