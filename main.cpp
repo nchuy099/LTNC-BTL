@@ -224,7 +224,7 @@ int main( int argc, char* argv[] )
                                             e1--;
                                             score += SCORE_INCREASEMENT_ENEMY1;
                                             character.removeAmmo(shot);
-                                            if(char_mp < 3) char_mp++;
+                                            char_mp++;
                                             enemy1.~Enemy();
                                         }
                                         else if (checkCollision2(*shot, shotRect, enemy2, gEnemy2Clips[0]) )
@@ -235,7 +235,7 @@ int main( int argc, char* argv[] )
                                             e2--;
                                             score += SCORE_INCREASEMENT_ENEMY2;
                                             character.removeAmmo(shot);
-                                            if(char_mp < 3) char_mp++;
+                                            char_mp++;
                                             enemy2.~Enemy();
                                         }
                                         else if (checkCollision2(*shot, shotRect, enemy3, gEnemy3Clips[0]) )
@@ -246,7 +246,7 @@ int main( int argc, char* argv[] )
                                             e3--;
                                             score += SCORE_INCREASEMENT_ENEMY3;
                                             character.removeAmmo(shot);
-                                            if(char_mp < 3) char_mp++;
+                                            char_mp++;
                                             enemy3.~Enemy();
                                         }
                                         else if (checkCollision2(*shot, shotRect, enemy4, gEnemy4Clips[0]) )
@@ -257,7 +257,7 @@ int main( int argc, char* argv[] )
                                             e4--;
                                             score += SCORE_INCREASEMENT_ENEMY4;
                                             character.removeAmmo(shot);
-                                            if(char_mp < 3) char_mp++;
+                                            char_mp++;
                                             enemy4.~Enemy();
                                         }
                                     }
@@ -325,7 +325,7 @@ int main( int argc, char* argv[] )
                                 else if(HP_temp1 == HP_temp2 && HP_temp1>0)
                                 {
                                     if(char_hp > 0) char_hp--;
-                                    HP_temp1 = HP_temp2 =0;
+                                    HP_temp1 = HP_temp2 = 0;
                                     currentClip_Character = &gCharacterClips[8];
                                     character.render(currentClip_Character, gRenderer, gCharacterTexture);
                                 }
@@ -364,7 +364,7 @@ int main( int argc, char* argv[] )
                                     }
                                     character.render(currentClip_Character, gRenderer, gCharacterTexture);
                                 }
-                                if(char_hp == 1 && HP_temp1==1)    Mix_PlayChannel(MIX_CHANNEL, gDie, NOT_REPEATITIVE);
+                                if(char_hp == 1 && HP_temp1 > 0)    Mix_PlayChannel(MIX_CHANNEL, gDie, NOT_REPEATITIVE);
                                 renderCharacterPower(gHP_img, gMP_img, gHP_num, gMP_num, char_hp, char_mp, gRenderer, gFont);
                                 SDL_Rect* CurrentClip_Pause = &gPauseButton[PauseButton.mCurrentSprite];
                                 PauseButton.render(CurrentClip_Pause, gRenderer, gPauseButtonTexture);
