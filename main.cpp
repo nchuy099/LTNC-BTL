@@ -286,25 +286,25 @@ int main( int argc, char* argv[] )
                                     e4--;
                                     if(e4==0)   e4 = EXPLOSION_TIME;
                                 }
-                                if(currentClip_Enemy1 == NULL)
+                                if(!enemy1.check_Enemy_Deconstruct())
                                 {
                                     currentClip_Enemy1 = &gEnemy1Clips[enemy1_frame / SLOW_FRAME_ENEMY1];
                                     enemy1.move();
                                     enemy1.render(gRenderer, currentClip_Enemy1);
                                 }
-                                if(currentClip_Enemy2 == NULL)
+                                if(!enemy2.check_Enemy_Deconstruct())
                                 {
                                     currentClip_Enemy2 = &gEnemy2Clips[enemy2_frame / SLOW_FRAME_ENEMY2];
                                     enemy2.move();
                                     enemy2.render(gRenderer, currentClip_Enemy2);
                                 }
-                                if(currentClip_Enemy3 == NULL)
+                                if(!enemy3.check_Enemy_Deconstruct())
                                 {
                                     currentClip_Enemy3 = &gEnemy3Clips[enemy3_frame / SLOW_FRAME_ENEMY3];
                                     enemy3.move();
                                     enemy3.render(gRenderer, currentClip_Enemy3);
                                 }
-                                if(currentClip_Enemy4 == NULL)
+                                if(!enemy4.check_Enemy_Deconstruct())
                                 {
                                     currentClip_Enemy4 = &gEnemy4Clips[enemy4_frame / SLOW_FRAME_ENEMY4];
                                     enemy4.move();
